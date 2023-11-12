@@ -15,18 +15,18 @@ public class ActualizarEstudianteService {
 
     private final EstudianteRepository studentRepository;
 
-    public Estudiante updateStudent(Long id) {
+    public Estudiante updateStudent(Long id, Estudiante newStudent) {
         EstudianteEntity estudiante = studentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontró la entidad con ID: " + id));
 
-//        EstudianteEntity entity = EstudianteEntity.builder()
-//                .id(estudiante.getId())
-//                .nombre(estudiante.getNombre())
-//                .apellido(estudiante.getApellido())
-//                .edad(estudiante.getEdad())
-//                .build();
+        EstudianteEntity entity = EstudianteEntity.builder()
+                .id(estudiante.getId())
+                .nombre(newStudent.getNombre())
+                .apellido(newStudent.getApellido())
+                .edad(newStudent.getEdad())
+                .build();
 
-        EstudianteEntity entitySave = studentRepository.save(estudiante);
+        EstudianteEntity entitySave = studentRepository.save(entity);
         return StudentMapper.INSTANCE.mapToDomain(entitySave);
     }
 }
